@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Testing the efficacy of modern concept erasure method using rigid evaluation metrics">
+  <meta property="og:title" content="Unlearning or Concealment? A Critical Analysis and Evaluation Metrics for Unlearning in Diffusion Models"/>
+  <meta property="og:description" content="Testing the efficacy of modern concept erasure method using rigid evaluation metrics"/>
+  <meta property="og:url" content="https://respailab.github.io/unlearning-or-concealment"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <!-- <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/> -->
+
+  <meta name="keywords" content="diffusion machine unlearning concept erasure">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Unlearning or Concealment? A Critical Analysis and Evaluation Metrics for Unlearning in Diffusion Models</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/leaderboard.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+
+        equationNumbers: { autoNumber: "AMS" }
+      }
+    });
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .algorithm { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Unlearning or Concealment? A Critical Analysis and Evaluation Metrics for Unlearning in Diffusion Models</h1>
+            <div class="is-size-5 publication-authors">
+				  <span class="author-block">
+					<a href="https://aakash.is-a.dev" target="_blank">Aakash Sen Sharma<sup style="color:#6fbf73;">1</sup><sup>, </sup><sup style="color:#ffac33;">2</sup></a>, </span>
+
+				  <span class="author-block">
+					<a href="" target="_blank">Niladri Sarkar<sup style="color:#6fbf73;">1</sup><sup>, </sup><sup style="color:#ffac33;">2</sup></a>, </span>
+
+				  <span class="author-block">
+					<a href="https://www.linkedin.com/in/vikram2000b" target="_blank">Vikram S Chundawat<sup style="color:#6fbf73;">1</sup></a>, </span>
+
+				  <span class="author-block">
+					<a href="https://www.usf.edu/engineering/cse/people/mali-ankur.aspx" target="_blank">Ankur A Mali<sup style="color:#ed4b82;">3</sup></a>, </span>
+
+				  <span class="author-block">
+					<a href="https://murarimandal.github.io/" target="_blank">Murari Mandal<sup style="color:#000000">†, </sup><sup style="color:#6fbf73;">1</sup><sup>, </sup><sup style="color:#ffac33;">2</sup></a></span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+					  <span class="author-block"><sup style="color:#6fbf73;">1</sup>RespAI Lab, India</span><br>
+					  <span class="author-block"><sup style="color:#ffac33;">2</sup>School of Computer Engineer, KIIT Bhubaneswar</span><br>
+					  <span class="author-block"><sup style="color:#ed4b82;">3</sup>University of South Florida</span>
+                  </div>
+
+				  <br>
+                  <div class="is-size-5 publication-authors">
+					  <span class="author-block"><sup style="color:#000000">†</sup>Corresponding Author:</span>
+					  <span class="author-block"><a href="mailto:murari.mandalfcs@kiit.ac.in">murari.mandalfcs@kiit.ac.in</a></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Teaser video-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+		<img src="static/images/PDArch.png" alt="Partial Diffusion Architecture"/>
+      <!-- <video poster="" id="tree" autoplay controls muted loop height="100%"> -->
+        <!-- Your video here -->
+        <!-- <source src="static/videos/banner_video.mp4" -->
+        <!-- type="video/mp4"> -->
+      <!-- </video> -->
+      <h2 class="subtitle has-text-centered">
+		  We expose a significant vulnerability in diffusion model unlearning methods, where an attacker can reverse the supposed erasure of concepts during the inference process. Our approach leverages a novel Partial Diffusion Attack that operates across all layers of the model, successfully recovering forgotten concepts in an unsupervised and data-free manner. While our work currently focuses on the unlearning methods applied to Stable Diffusion 1.4, this limitation highlights the need for further research to generalize these findings to other models and versions.
+      </h2>
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+			Recent research has seen significant interest in methods for
+			concept removal and targeted forgetting in diffusion models. In this paper, we conduct a comprehensive white-box
+			analysis to expose significant vulnerabilities in existing diffusion model unlearning methods. We show that the objective
+			functions used for unlearning in the existing methods lead
+			to decoupling of the targeted concepts (meant to be <i>forgotten</i>) for the corresponding prompts. This is concealment and
+			not actual unlearning, which was the original goal. Ideally,
+			the knowledge of the concepts should have been completely
+			scrubbed in the latent space of the model. The ineffectiveness
+
+			of current methods stems primarily from their narrow focus
+			on reducing generation probabilities for specific prompt sets,
+			neglecting the diverse modalities of intermediate guidance
+			employed during the inference process. The paper presents a
+			rigorous theoretical and empirical examination of four commonly used techniques for unlearning in diffusion models,
+			while exposing their potential weaknesses.
+			We introduce two new evaluation metrics: Concept Retrieval
+			Score ($\mathcal{CRS}$) and Concept Confidence Score ($\mathcal{CCS}$). These
+			metrics are based on a successful adversarial attack setup
+			that can recover <i>forgotten</i> concepts from <i>unlearned</i> diffusion
+			models. $\mathcal{CRS}$ measures the similarity between the latent representations of the <i>unlearned</i> and <i>fully trained</i> models after
+			unlearning. It reports the extent of retrieval of the <i>forgotten</i>
+
+			concepts with increasing amount of guidance. $\mathcal{CCS}$ quantifies the confidence of the model in assigning the target concept to the manipulated data. It reports the probability of the
+			unlearned model’s generations to be aligned with the original domain knowledge with increasing amount of guidance.
+			The proposed metrics offer stringent assessment of unlearning in diffusion models, enabling a more accurate evaluation
+
+			of concept erasure methods. Evaluating the existing unlearning methods with our metrics reveal significant shortcomings
+			in their ability to truly <i>unlearn</i> concepts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+
+       <div class="item">
+        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
+        <h2 class="subtitle has-text-centered">
+          First image description.
+        </h2>
+      </div>
+
+      <div class="item">
+        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
+        <h2 class="subtitle has-text-centered">
+          Second image description.
+        </h2>
+      </div>
+
+      <div class="item">
+        <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
+        <h2 class="subtitle has-text-centered">
+         Third image description.
+       </h2>
+     </div>
+
+     <div class="item">
+      <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
+      <h2 class="subtitle has-text-centered">
+        Fourth image description.
+      </h2>
+    </div>
+
+  </div>
+</div>
+</div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered m-6">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3" id="leaderboard">Quantitative Results</h2>
+        <div class="content">
+          <div class="content has-text-justified">
+            <p>
+              Quantitative results for 4 popular concept erasure methods in diffusion models on our partial diffusion attack.
+            </p>
+          </div>
+
+          <div class="model-labels-container">
+            <!-- <span class="leaderboard-label" style="background-color: #f8fffe;">Open-Source</span>
+            <span class="leaderboard-label" style="background-color: #f9f2f8;">Closed</span> -->
+			<span class="leaderboard-label" style="background-color: rgba(255, 208, 80, 0.15);">ESD<sub>u</sub></span>
+			<span class="leaderboard-label" style="background-color: rgba(249, 242, 248, 1);">ESD<sub>x</sub></span>
+            <span class="leaderboard-label" style="background-color: rgb(229, 237, 255);">Ablating Concepts</span>
+            <span class="leaderboard-label" style="background-color: rgb(224, 243, 224);">Safe Self-Distillation</span>
+            <!-- <span class="leaderboard-label" style="background-color: rgba(117, 209, 215, 0.1);">Closed-source LVLMs</span> -->
+          </div>
+
+          <table class="table-container">
+            <tbody><tr style="background-color: rgba(122, 122, 122, 0.15);">
+				<td class="js-sort-number"><strong>Model</strong></td>
+				<td class="js-sort-number"><strong>Unlearned Concept</strong></td>
+				<td class="js-sort-number"><strong>Concept Class</strong></td>
+				<td class="js-sort-number"><strong>$\mathcal{CCS}$</strong></td>
+				<td class="js-sort-number"><strong>$\mathcal{CRS}$</strong></td>
+				<td class="js-sort-number"><strong>Mean KID ($\lambda_{\mathcal{P}}$ to $\lambda_{\mathcal{O}}$)</strong></td>
+				<td class="js-sort-number"><strong>Mean KID ($\lambda_{\mathcal{P}}$ to $\lambda_{\mathcal{U}}$)</strong></td>
+            </tr>
+            <tr style="background-color: rgba(255, 208, 80, 0.15);">
+			  <td style="text-align: left;">
+				<a href="https://erasing.baulab.info/">
+					<b>ESD<sub>u</sub></b>
+			   </a> 
+			  </td>
+                <td>31.5</td>
+            <td>25.0</td>
+            <td>25.0</td>
+                <td>32.0</td>
+                <td>27.7</td>
+                <td>27.3</td>
+            </tr>
+            <tr style="background-color: rgba(255, 208, 80, 0.15);">
+				<td></td>
+              <td>28.5</td>
+              <td>27.5</td>
+              <td>30.5</td>
+              <td>31.0</td>
+            <td>25.0</td>
+            <td>25.0</td>
+            </tr>
+
+            <tr style="background-color: rgba(255, 208, 80, 0.15);">
+				<td></td>
+                <td>23.0</td>
+                <td>26.9</td>
+                <td>24.5</td>
+                <td>23.0</td>
+            <td>25.0</td>
+            <td>25.0</td>
+            </tr>
+            <tr style="background-color: rgba(255, 208, 80, 0.15);">
+				<td></td>
+              <td>10.5</td>
+              <td>22.5</td>
+              <td>27.0</td>
+              <td>27.0</td>
+            <td>25.0</td>
+            <td>25.0</td>
+            </tr>
+        <tr style="background-color: rgba(249, 242, 248, 1);">
+			  <td style="text-align: left;">
+				<a href="https://erasing.baulab.info/">
+					<b>ESD<sub>x</sub></b>
+			   </a> 
+			  </td>
+            <td>28.5</td>
+            <td>26.0</td>
+            <td>23.8</td>
+            <td>27.0</td>
+            <td>85.0</td>
+            <td>85.0</td>
+        </tr>
+        <tr style="background-color: rgba(249, 242, 248, 1);">
+				<td></td>
+            <td>26.0</td>
+            <td>22.5</td>
+            <td>25.0</td>
+            <td><b>50.5</b></td>
+            <td>76.0</td>
+            <td>13.5</td>
+        </tr>
+        <tr style="background-color: rgb(229, 237, 255);">
+			  <td style="text-align: left;">
+				<a href="https://www.cs.cmu.edu/~concept-ablation/">
+					<b>Ablating Concepts</b>
+			   </a> 
+			  </td>
+            <td>20.5</td>
+            <td>26.9</td>
+            <td>20.5</td>
+            <td>26.9</td>
+            <td>25.0</td>
+            <td>88.0</td>
+        </tr>
+            <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td style="text-align: left;">
+				<a href="https://nannullna.github.io/safe-diffusion/">
+					<b>Safe Self-Distillation</b>
+			   </a> 
+			  </td>
+              <td>71.5</td>
+              <td><b>35.0</b></td>
+              <td><b>28.0</b></td>
+              <td><b>92.5</b></td>
+            <td>25.0</td>
+            <td>25.0</td>
+          </tr>
+          <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td></td>
+              <td>55.0</td>
+              <td>12.5</td>
+              <td><b>69.0</b></td>
+              <td><b>49.0</b></td>
+            <td>25.0</td>
+            <td>25.0</td>
+          </tr>
+
+          <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td></td>
+            <td>25.0</td>
+            <td>21.0</td>
+            <td>26.5</td>
+            <td>84.0</td>
+            <td>25.0</td>
+            <td>25.0</td>
+
+        </tr>
+        <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td></td>
+            <td>13.0</td>
+            <td>25.0</td>
+            <td>25.0</td>
+            <td>61.0</td>
+            <td>55.0</td>
+            <td>43.0</td>
+        </tr>
+        <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td></td>
+            <td>10.5</td>
+            <td>43.5</td>
+            <td>25.0</td>
+            <td>25.0</td>
+            <td>23.0</td>
+            <td>91.0</td>
+        </tr>
+        <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td></td>
+            <td>78.5</td>
+            <td>25.0</td>
+            <td>25.0</td>
+            <td>10.5</td>
+            <td>53.5</td>
+            <td>36.5</td>
+        </tr>
+
+        <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td></td>
+            <td>73.5</td>
+            <td>29.0</td>
+            <td>21.5</td>
+            <td>37.3</td>
+            <td>23.5</td>
+            <td>90.0</td>
+        </tr>
+        <tr style="background-color: rgba(117, 209, 215, 0.1);">
+			  <td></td>
+            <td>53.0</td>
+            <td>33.5</td>
+            <td>53.0</td>
+            <td>33.5</td>
+            <td>53.0</td>
+            <td>33.5</td>
+        </tr>
+      </tbody></table>  
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small is-light">
+  <div class="container is-max-desktop content">
+    <div class="algorithm">
+        \[
+        \begin{array}{l}
+        \textbf{Algorithm: Partial Diffusion Pipeline} \\
+
+        \hline
+        1: \theta: \text{fully trained model}; \theta^*: \text{unlearned model}; \mathcal{P}: \text{prompt}; \\
+        \quad \mathcal{T}: \text{total timesteps}; \psi: \text{partial diffusion ratio}; \eta: \text{guidance} \\
+        \quad \text{scale}; \mathcal{L}: \text{partially denoised latent} \\
+        2: E \leftarrow \textit{get_prompt_embeddings}(\mathcal{P}) \\
+        3: \mathcal{T}_\text{partial} \leftarrow \{t \in \mathcal{T} : t \leq \lfloor|\mathcal{T}| \times \psi\rfloor\} \\
+        4: \mathcal{L} \leftarrow \textit{initialize_latents}() \\
+        5: \textbf{for } t \in \mathcal{T} \textbf{ do} \\
+        6: \quad \textbf{if } t \in \mathcal{T}_\text{partial} \textbf{ then} \\
+        7: \quad\quad \epsilon_{t-1} \leftarrow \theta(\mathcal{L}, E, t) \\
+        8: \quad \textbf{else} \\
+        9: \quad\quad \epsilon_{t-1} \leftarrow \theta^*(\mathcal{L}, E, t) \\
+        10: \quad \textbf{end if} \\
+        11: \quad \epsilon_{t-1} \leftarrow \textit{compute_cfg}(\epsilon_{t-1}, E, \eta) \\
+        12: \quad \mathcal{L} \leftarrow \mathcal{L} - \epsilon_{t-1} \\
+        13: \textbf{end for} \\
+
+        14: \textbf{return } \textit{decode_latent}(\mathcal{L}) \quad \text{// Return the final image} \\
+        \hline
+        \end{array}
+        \]
+    </div>
+  </div>
+</section>
+
+
+<!-- Youtube video -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container"> -->
+      <!-- Paper video. -->
+      <!-- <h2 class="title is-3">Video Presentation</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <div class="publication-video"> -->
+            <!-- Youtube embed code here -->
+            <!-- <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- End youtube video -->
+
+
+<!-- Video carousel -->
+<!-- <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Another Carousel</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-video1">
+          <video poster="" id="video1" autoplay controls muted loop height="100%"> -->
+            <!-- Your video file here -->
+            <!-- <source src="static/videos/carousel1.mp4"
+            type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video2">
+          <video poster="" id="video2" autoplay controls muted loop height="100%"> -->
+            <!-- Your video file here -->
+            <!-- <source src="static/videos/carousel2.mp4"
+            type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video3">
+          <video poster="" id="video3" autoplay controls muted loop height="100%">\ -->
+            <!-- Your video file here -->
+            <!-- <source src="static/videos/carousel3.mp4"
+            type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- End video carousel -->
+
+
+
+
+
+
+<!-- Paper poster -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">Poster</h2>
+
+      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
+          </iframe>
+        
+      </div>
+    </div>
+  </section> -->
+<!--End paper poster -->
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+@article{sensharma2024unlearning},
+  title={Unlearning or Concealment? A Critical Analysis and Evaluation Metrics for Unlearning in Diffusion Models},
+  author={Aakash Sen Sharma and Niladri Sarkar and Vikram S Chundawat and Ankur A Mali and Murari Mandal},
+  journal={arXiv preprint arXiv:},
+  year={2024}
+}
+	  </code></pre>
+    </div>
+	</section>
+
+
+  <footer class="footer">
+	  <div class="container">
+		<div class="columns is-centered">
+		  <div class="column is-8">
+			<div class="content">
+
+			  <p>
+				This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+				You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+				Commons Attribution-ShareAlike 4.0 International License</a>.
+			  </p>
+
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</footer>
+  </body>
+  	    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "data.json",
+                type: "GET",
+                success: function(data) {
+                    $(".latex-content").html(data.latex_equation);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
+    </script>
+</html>
