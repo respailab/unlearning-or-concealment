@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+__pycache__
+/pretrained_models/
+*.pth
+*.pkl
+*.pdf
+*.safetensors
+./out
+./environ
