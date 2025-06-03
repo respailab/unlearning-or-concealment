@@ -897,6 +897,7 @@ class PixArtAlphaPipeline(DiffusionPipeline):
         num_warmup_steps = max(len(timesteps) - num_inference_steps * self.scheduler.order, 0)
 
         # 7.1 Apply denoising_end
+        print("Before:", timesteps)
         if denoising_end is not None and type(denoising_end) == float and denoising_end > 0 and denoising_end < 1:
             discrete_timestep_cutoff = int(
                 round(
@@ -905,6 +906,7 @@ class PixArtAlphaPipeline(DiffusionPipeline):
             )
             num_inference_steps = len(list(filter(lambda ts: ts >= discrete_timestep_cutoff, timesteps)))
             timesteps = timesteps[:num_inference_steps]
+        print("After:", timesteps)
 
         with self.progress_bar(total=num_inference_steps) as progress_bar:
             for i, t in enumerate(timesteps):
