@@ -706,6 +706,7 @@ class PixArtAlphaPipeline(DiffusionPipeline):
         clean_caption: bool = True,
         use_resolution_binning: bool = True,
         max_sequence_length: int = 120,
+        denoising_end: Optional[float] = None,
         **kwargs,
     ) -> Union[ImagePipelineOutput, Tuple]:
         """
@@ -894,6 +895,16 @@ class PixArtAlphaPipeline(DiffusionPipeline):
 
         # 7. Denoising loop
         num_warmup_steps = max(len(timesteps) - num_inference_steps * self.scheduler.order, 0)
+
+        # 7.1 Apply denoising_end
+        if denoising_end is not None and type(denoising_end) == float and denoising_end > 0 and denoising_end < 1:
+            discrete_timestep_cutoff = int(
+                round(
+                    self.scheduler.config.num_train_timesteps - (denoising_end * self.scheduler.config.num_train_timesteps)
+                )
+            )
+            num_inference_steps = len(list(filter(lambda ts: ts >= discrete_timestep_cutoff, timesteps)))
+            timesteps = timesteps[:num_inference_steps]
 
         with self.progress_bar(total=num_inference_steps) as progress_bar:
             for i, t in enumerate(timesteps):
