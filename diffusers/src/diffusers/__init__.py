@@ -660,7 +660,7 @@ if TYPE_CHECKING or DIFFUSERS_SLOW_IMPORT:
             PaintByExamplePipeline,
             PIAPipeline,
             PixArtAlphaPipeline,
-            PixArtAlphaImg2ImgPipeline
+            PixArtAlphaImg2ImgPipeline,
             PixArtSigmaPipeline,
             SemanticStableDiffusionPipeline,
             ShapEImg2ImgPipeline,
