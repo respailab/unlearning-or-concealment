@@ -232,7 +232,7 @@ def retrieve_timesteps(
     return timesteps, num_inference_steps
 
 
-class PixArtAlphaPipeline(DiffusionPipeline):
+class PixArtAlphaImg2ImgPipeline(DiffusionPipeline):
     r"""
     Pipeline for text-to-image generation using PixArt-Alpha.
 
