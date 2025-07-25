@@ -23,7 +23,7 @@ except OptionalDependencyNotAvailable:
     _dummy_objects.update(get_objects_from_module(dummy_torch_and_transformers_objects))
 else:
     _import_structure["pipeline_pixart_alpha"] = ["PixArtAlphaPipeline"]
-    _import_structure["pipeline_pixart_alpha"] = ["PixArtAlphaImg2ImgPipeline"]
+    _import_structure["pipeline_pixart_alpha_img2img"] = ["PixArtAlphaImg2ImgPipeline"]
     _import_structure["pipeline_pixart_sigma"] = ["PixArtSigmaPipeline"]
 
 if TYPE_CHECKING or DIFFUSERS_SLOW_IMPORT:
